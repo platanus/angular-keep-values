@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.js': 'src/keep-values.js'
+          'dist/<%= pkg.name %>.js': ['src/keep-values.js', 'src/keep-current-value.js', 'src/keep-input-values.js']
         }
       }
     },
