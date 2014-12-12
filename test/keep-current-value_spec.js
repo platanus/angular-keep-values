@@ -8,10 +8,10 @@ describe('', function() {
     var element, scope;
 
     beforeEach(inject(function($rootScope, $compile) {
-      element = angular.element('<input type="text" keep-current-value value="Ignacio" ng-model="data.nombre">');
+      element = angular.element('<input type="text" keep-current-value value="Ignacio Ochoa" ng-model="data.name">');
 
       scope = $rootScope.$new();
-      scope.data = { nombre: '' };
+      scope.data = { name: '' };
       $compile(element)(scope);
       scope.$digest();
 
@@ -19,7 +19,7 @@ describe('', function() {
     }));
 
     it('should set the ngModel\'s value to the contents of the value attribute', function(){
-      expect(scope.data.nombre).toEqual('Ignacio');
+      expect(scope.data.name).toEqual('Ignacio Ochoa');
     });
     
   });
