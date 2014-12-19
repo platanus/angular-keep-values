@@ -11,10 +11,12 @@ function keepInputValues() {
   return directive;
 
   function link(scope, element, attrs) {
-    var inputs = element.find('input');
-    angular.forEach(inputs, function(input){
-      var x = angular.element(input);
-      x.attr('keep-current-value', '');
+    SUPPORTED_ELEMENTS.forEach(function(tagName){
+      var checkElements = element.find(tagName);
+      angular.forEach(checkElements, function(checkElement) {
+        var checkElement = angular.element(checkElement);
+        if ( angular.isDefined(checkElement.attr('ng-model')) ) checkElement.attr('keep-current-value', '');
+      })
     });
   }
 }
