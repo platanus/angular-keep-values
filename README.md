@@ -1,5 +1,10 @@
-angular-keep-values
+angular-keep-values [![Bower version][bower-badge]][bower] [![Build Status][travis-badge]][travis]
 ===============
+
+[travis]: https://travis-ci.org/platanus/angular-keep-values
+[travis-badge]: https://travis-ci.org/platanus/angular-keep-values.svg?branch=master
+[bower]: http://badge.fury.io/bo/angular-keep-values
+[bower-badge]: https://badge.fury.io/bo/angular-keep-values.svg
 
 Use the ```value``` attribute in your inputs to set the value of your ```ngModel```.
 
