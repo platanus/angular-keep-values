@@ -71,6 +71,54 @@ describe('', function() {
     
   });
 
+  describe('keepCurrentValue directive on multiple select tag', function() {
+    var element, scope;
+
+    beforeEach(inject(function($rootScope, $compile) {
+      element = angular.element('\
+        <select multiple="multiple" keep-current-value ng-model="data.city">\
+          <option selected="selected" value="25">Santiago</option>\
+          <option value="58">Curicó</option>\
+          <option selected="selected" value="46">Puerto Montt</option>\
+        </select>');
+
+      scope = $rootScope.$new();
+      scope.data = { city: '' };
+      $compile(element)(scope);
+      scope.$digest();
+    }));
+
+    it('should set the ngModel\'s value to the contents of the selected options\' value', function(){
+      expect(scope.data.city).toEqual(['25', '46']);
+      expect(element.val()).toEqual(['25', '46']);
+    });
+
+  });
+
+  describe('keepCurrentValue directive on multiple select tag without selected option', function() {
+    var element, scope;
+
+    beforeEach(inject(function($rootScope, $compile) {
+      element = angular.element('\
+        <select multiple="multiple" keep-current-value ng-model="data.city">\
+          <option value="25">Santiago</option>\
+          <option value="58">Curicó</option>\
+          <option value="46">Puerto Montt</option>\
+        </select>');
+
+      scope = $rootScope.$new();
+      scope.data = { city: '' };
+      $compile(element)(scope);
+      scope.$digest();
+    }));
+
+    it('should set the ngModel\'s value to an empty array', function(){
+      expect(scope.data.city).toEqual([]);
+      expect(element.val()).toEqual(null);
+    });
+
+  });
+
   describe('keepCurrentValue directive on textarea tag', function() {
     var element, scope;
 
