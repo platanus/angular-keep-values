@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.2 - 2014-12-19
+ * @version v0.1.3 - 2015-05-11
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -12,14 +12,25 @@ var SUPPORTED_ELEMENTS = ['INPUT', 'SELECT', 'TEXTAREA'];
 
 angular
   .module('platanus.keepValues', []);
+
 var getViewValueFrom = {
   SELECT: function(element) {
     var options = element.find('option');
+    var values = [];
     for (var i = 0; i < options.length; i++) {
       var el = angular.element(options[i].outerHTML);
-      if ( el.attr('selected') ) return el.attr('value');
-    };
-    if ( options[0] ) return angular.element(options[0]).attr('value');
+      if (el.prop('selected')) {
+        values.push(el.attr('value'));
+      }
+    }
+    if (element.prop('multiple')) {
+      return values;
+    } else {
+      if (values[0])
+        return values[0];
+      else if (options[0])
+        return angular.element(options[0]).attr('value');
+    }
   },
   INPUT: function(element) {
     return element.attr('value');
@@ -27,7 +38,7 @@ var getViewValueFrom = {
   TEXTAREA: function(element) {
     return element.html();
   }
-}
+};
 
 angular
   .module('platanus.keepValues')
@@ -52,13 +63,11 @@ function keepCurrentValue() {
 }
 
 function getViewValueFromElement(element) {
-  var viewValue;
   var tagName = element[0].tagName;
 
   if ( SUPPORTED_ELEMENTS.indexOf(tagName) > -1 ) return getViewValueFrom[tagName](element);
   return false;
 }
-
 
 angular
   .module('platanus.keepValues')
@@ -81,4 +90,5 @@ function keepInputValues() {
       })
     });
   }
-}})(angular);
+}
+})(angular);
