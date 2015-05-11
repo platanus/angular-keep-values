@@ -1,11 +1,21 @@
 var getViewValueFrom = {
   SELECT: function(element) {
     var options = element.find('option');
+    var values = [];
     for (var i = 0; i < options.length; i++) {
       var el = angular.element(options[i].outerHTML);
-      if ( el.attr('selected') ) return el.attr('value');
-    };
-    if ( options[0] ) return angular.element(options[0]).attr('value');
+      if (el.prop('selected')) {
+        values.push(el.attr('value'));
+      }
+    }
+    if (element.prop('multiple')) {
+      return values;
+    } else {
+      if (values[0])
+        return values[0];
+      else if (options[0])
+        return angular.element(options[0]).attr('value');
+    }
   },
   INPUT: function(element) {
     return element.attr('value');
@@ -13,7 +23,7 @@ var getViewValueFrom = {
   TEXTAREA: function(element) {
     return element.html();
   }
-}
+};
 
 angular
   .module('platanus.keepValues')
@@ -38,10 +48,8 @@ function keepCurrentValue() {
 }
 
 function getViewValueFromElement(element) {
-  var viewValue;
   var tagName = element[0].tagName;
 
   if ( SUPPORTED_ELEMENTS.indexOf(tagName) > -1 ) return getViewValueFrom[tagName](element);
   return false;
 }
-

@@ -11,22 +11,21 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-		// libraries
-		'bower_components/angular/angular.js',
-        'bower_components/angular-mocks/angular-mocks.js',
+      // libraries
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
 
-		// our app
-        'src/keep-values.js',
-        'src/*.js',
+      // our app
+      'src/keep-values.js',
+      'src/*.js',
 
-		// tests
-		'test/**/*.js'
+      // tests
+      'test/**/*.js'
     ],
 
 
     // list of files to exclude
     exclude: [
-
     ],
 
 
@@ -74,6 +73,6 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: false
-
   });
+
 };
