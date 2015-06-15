@@ -19,7 +19,7 @@ bower install angular-keep-values --save
 Then, inject it into your application:
 
 ```javascript
-angular.module('MyApp', ['platanus.keep-values']);
+angular.module('MyApp', ['platanus.keepValues']);
 ```
 
 ## Usage
