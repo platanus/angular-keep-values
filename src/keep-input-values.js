@@ -23,3 +23,5 @@ function keepInputValues($compile) {
     });
   }
 }
+
+keepInputValues.$inject = ['$compile'];
