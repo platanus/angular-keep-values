@@ -2,7 +2,7 @@ angular
   .module('platanus.keepValues')
   .directive('keepInputValues', keepInputValues);
 
-function keepInputValues() {
+function keepInputValues($compile) {
   var directive = {
     link: link,
     restrict: 'A'
@@ -15,7 +15,10 @@ function keepInputValues() {
       var checkElements = element.find(tagName);
       angular.forEach(checkElements, function(checkElement) {
         var checkElement = angular.element(checkElement);
-        if ( angular.isDefined(checkElement.attr('ng-model')) ) checkElement.attr('keep-current-value', '');
+        if ( angular.isDefined(checkElement.attr('ng-model')))
+          checkElement
+            .attr('keep-current-value', '')
+            .replaceWith($compile(checkElement)(scope));
       })
     });
   }
