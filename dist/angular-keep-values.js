@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.3 - 2015-05-11
+ * @version v0.1.4 - 2015-06-16
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -73,7 +73,7 @@ angular
   .module('platanus.keepValues')
   .directive('keepInputValues', keepInputValues);
 
-function keepInputValues() {
+function keepInputValues($compile) {
   var directive = {
     link: link,
     restrict: 'A'
@@ -86,7 +86,10 @@ function keepInputValues() {
       var checkElements = element.find(tagName);
       angular.forEach(checkElements, function(checkElement) {
         var checkElement = angular.element(checkElement);
-        if ( angular.isDefined(checkElement.attr('ng-model')) ) checkElement.attr('keep-current-value', '');
+        if ( angular.isDefined(checkElement.attr('ng-model')))
+          checkElement
+            .attr('keep-current-value', '')
+            .replaceWith($compile(checkElement)(scope));
       })
     });
   }
