@@ -42,6 +42,7 @@ function keepCurrentValue() {
     var viewValue = getViewValueFromElement(element);
     if ( viewValue ) {
       controller.$setViewValue(viewValue);
+      controller.$setPristine();
       controller.$render();
     }
   }
