@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.5 - 2015-06-16
+ * @version v0.1.6 - 2015-06-22
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -57,6 +57,7 @@ function keepCurrentValue() {
     var viewValue = getViewValueFromElement(element);
     if ( viewValue ) {
       controller.$setViewValue(viewValue);
+      controller.$setPristine();
       controller.$render();
     }
   }
