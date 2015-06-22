@@ -21,6 +21,19 @@ function keepInputValues($compile) {
             .replaceWith($compile(checkElement)(scope));
       })
     });
+
+    if(element[0].tagName === 'FORM') {
+      setPristine(attrs.name);
+    } else {
+      angular.forEach(element.find('form'), function(form){
+        setPristine(form.name);
+      });
+    }
+
+    function setPristine(formName){
+      if(formName)
+        scope[formName].$setPristine();
+    }
   }
 }
 
