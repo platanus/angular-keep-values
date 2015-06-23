@@ -25,6 +25,11 @@ describe('', function() {
           <textarea ng-model="data.bio">Lorem ipsum</textarea>\
           <textarea>Dolor sit amet</textarea>\
         </div>\
+        <form name="myForm" keep-input-values></form>\
+        <div keep-input-values>\
+          <form name="formInsideDiv"></form>\
+          <form></form>\
+        </div>\
       ');
 
       scope = $rootScope.$new();
@@ -43,7 +48,12 @@ describe('', function() {
         expect(keepCount).toEqual(1);
       });
     });
-    
+
+    it('should set form state to pristine', function(){
+      expect(scope['myForm'].$pristine).toBe(true);
+      expect(scope['formInsideDiv'].$pristine).toBe(true);
+    });
+
   });
 
 });
