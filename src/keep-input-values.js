@@ -14,7 +14,7 @@ function keepInputValues($compile) {
     SUPPORTED_ELEMENTS.forEach(function(tagName){
       var checkElements = element.find(tagName);
       angular.forEach(checkElements, function(checkElement) {
-        var checkElement = angular.element(checkElement);
+        checkElement = angular.element(checkElement);
         if ( angular.isDefined(checkElement.attr('ng-model')))
           checkElement
             .attr('keep-current-value', '')
