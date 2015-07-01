@@ -4,36 +4,41 @@ angular
 
 function keepInputValues($compile) {
   var directive = {
-    link: link,
+    compile: compile,
     restrict: 'A'
   };
 
   return directive;
 
-  function link(scope, element, attrs) {
+  function compile(element, attrs) {
+
     SUPPORTED_ELEMENTS.forEach(function(tagName){
       var checkElements = element.find(tagName);
       angular.forEach(checkElements, function(checkElement) {
         checkElement = angular.element(checkElement);
-        if ( angular.isDefined(checkElement.attr('ng-model')))
-          checkElement
-            .attr('keep-current-value', '')
-            .replaceWith($compile(checkElement)(scope));
-      })
+        if (angular.isDefined(checkElement.attr('ng-model')))
+          checkElement.attr('keep-current-value', '');
+      });
     });
 
-    if(element[0].tagName === 'FORM') {
-      setPristine(attrs.name);
-    } else {
-      angular.forEach(element.find('form'), function(form){
-        setPristine(form.name);
-      });
+    function preCompile(scope, element, attrs){
+      if(element[0].tagName === 'FORM') {
+        setPristine(attrs.name);
+      } else {
+        angular.forEach(element.find('form'), function(form){
+          setPristine(form.name);
+        });
+      }
+
+      function setPristine(formName){
+        if(formName && scope[formName])
+          scope[formName].$setPristine();
+      }
     }
 
-    function setPristine(formName){
-      if(formName)
-        scope[formName].$setPristine();
-    }
+    return {
+      pre: preCompile
+    };
   }
 }
 
