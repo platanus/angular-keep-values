@@ -47,6 +47,30 @@ describe('', function() {
     
   });
 
+
+    describe('keepCurrentValue directive on input radio tag', function() {
+      var element, scope;
+
+      beforeEach(inject(function($rootScope, $compile) {
+        element = angular.element('\
+          <input type="radio" value="MasterCard" keep-current-value ng-model="data.payment" checked>\
+          <input type="radio" value="Visa" keep-current-value ng-model="data.payment>\
+          <input type="radio" value="Deposit" keep-current-value ng-model="data.payment>');
+
+        scope = $rootScope.$new();
+        scope.data = { city: '' };
+        $compile(element)(scope);
+        scope.$digest();
+      }));
+
+      it('should set the ngModel\'s value to the contents of the checked option\'s value', function(){
+        expect(scope.data.payment).toEqual('MasterCard');
+        expect(element.val()).toEqual('MasterCard');
+      });
+
+    });
+
+
   describe('keepCurrentValue directive on select tag without selected option', function() {
     var element, scope;
 
