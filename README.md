@@ -24,7 +24,7 @@ angular.module('MyApp', ['platanus.keepValues']);
 
 ## Usage
 
-Add the ```keep-current-value``` directive to any input, select or textarea element to automatically set its value as the value of its associated ```ngModel```, without the need for ```ngInit```. 
+Add the ```keep-current-value``` directive to any input, select or textarea element to automatically set its value as the value of its associated ```ngModel```, without the need for ```ngInit```.
 
 ### Example
 
@@ -34,6 +34,11 @@ Add the ```keep-current-value``` directive to any input, select or textarea elem
   <option value="1">Santiago</option>
   <option value="2" selected>Concepción</option>
 </select>
+
+<input type="radio" ng-model="data.payment" value="Master Card" keep-current-value checked>
+<input type="radio" ng-model="data.payment" value="Visa" keep-current-value>
+<input type="radio" ng-model="data.payment" value="None" keep-current-value>
+
 <textarea ng-model="data.text" keep-current-value>Lorem ipsum</textarea>
 ```
 
@@ -42,7 +47,8 @@ Will result in:
 $scope.data = {
   name: 'René Morales',
   city: '2',
-  text: 'Lorem ipsum'
+  text: 'Lorem ipsum',
+  payment: 'Master Card'
 }
 ```
 
