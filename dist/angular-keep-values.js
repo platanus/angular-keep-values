@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.7 - 2015-06-23
+ * @version v0.1.8 - 2015-07-06
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -76,36 +76,41 @@ angular
 
 function keepInputValues($compile) {
   var directive = {
-    link: link,
+    compile: compile,
     restrict: 'A'
   };
 
   return directive;
 
-  function link(scope, element, attrs) {
+  function compile(element, attrs) {
+
     SUPPORTED_ELEMENTS.forEach(function(tagName){
       var checkElements = element.find(tagName);
       angular.forEach(checkElements, function(checkElement) {
-        var checkElement = angular.element(checkElement);
-        if ( angular.isDefined(checkElement.attr('ng-model')))
-          checkElement
-            .attr('keep-current-value', '')
-            .replaceWith($compile(checkElement)(scope));
-      })
+        checkElement = angular.element(checkElement);
+        if (angular.isDefined(checkElement.attr('ng-model')))
+          checkElement.attr('keep-current-value', '');
+      });
     });
 
-    if(element[0].tagName === 'FORM') {
-      setPristine(attrs.name);
-    } else {
-      angular.forEach(element.find('form'), function(form){
-        setPristine(form.name);
-      });
+    function preCompile(scope, element, attrs){
+      if(element[0].tagName === 'FORM') {
+        setPristine(attrs.name);
+      } else {
+        angular.forEach(element.find('form'), function(form){
+          setPristine(form.name);
+        });
+      }
+
+      function setPristine(formName){
+        if(formName && scope[formName])
+          scope[formName].$setPristine();
+      }
     }
 
-    function setPristine(formName){
-      if(formName)
-        scope[formName].$setPristine();
-    }
+    return {
+      pre: preCompile
+    };
   }
 }
 
