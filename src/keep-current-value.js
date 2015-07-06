@@ -18,7 +18,15 @@ var getViewValueFrom = {
     }
   },
   INPUT: function(element) {
-    return element.attr('value');
+    var type = element.attr('type');
+    if(type === 'radio') {
+        if(element.prop('checked')) {
+          return element.attr('value');
+        }
+    }
+    else {
+        return element.attr('value');
+    }
   },
   TEXTAREA: function(element) {
     return element.html();

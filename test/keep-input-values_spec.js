@@ -24,6 +24,10 @@ describe('', function() {
           </select>\
           <textarea ng-model="data.bio">Lorem ipsum</textarea>\
           <textarea>Dolor sit amet</textarea>\
+          <input type="radio" value="MasterCard" ng-model="data.payment" checked>\
+          <input type="radio" value="Visa" ng-model="data.payment">\
+          <input type="radio" value="Deposit" ng-model="data.payment">\
+          <input type="radio" value="None">\
         </div>\
         <form name="myForm" keep-input-values></form>\
         <div keep-input-values>\
@@ -38,16 +42,38 @@ describe('', function() {
       scope.$digest();
     }));
 
-    it('should add the keepCurrentValue directive to all supported elements  with an ngModel', function(){
+    it('should add the keepCurrentValue directive to all supported elements (except radio) with an ngModel', function(){
       TEST_SUPPORTED_ELEMENTS.forEach(function(tagName){
         var keepCount = 0;
         var checkElements = element.find(tagName);
-        angular.forEach(checkElements, function(checkElement){
+        var filteredCheckElements = [];
+        angular.forEach(checkElements, function(element) {
+          if (angular.element(element).attr('type') !== 'radio')
+            filteredCheckElements.push(element);
+        });
+
+        angular.forEach(filteredCheckElements, function(checkElement){
           if ( angular.isDefined(angular.element(checkElement).attr('keep-current-value')) ) keepCount++;
-        })
+        });
         expect(keepCount).toEqual(1);
       });
     });
+
+    it('should add the keepCurrentValue directive to radio inputs with an ngModel', function(){
+      var keepCount = 0;
+      var checkElements = element.find('input');
+      var filteredCheckElements = [];
+      angular.forEach(checkElements, function(element) {
+        if (angular.element(element).attr('type') === 'radio')
+          filteredCheckElements.push(element);
+      });
+
+      angular.forEach(filteredCheckElements, function(checkElement){
+        if ( angular.isDefined(angular.element(checkElement).attr('keep-current-value')) ) keepCount++;
+      });
+      expect(keepCount).toEqual(3);
+    });
+
 
     it('should set form state to pristine', function(){
       expect(scope['myForm'].$pristine).toBe(true);
