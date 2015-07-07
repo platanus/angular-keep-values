@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.8 - 2015-07-06
+ * @version v0.1.9 - 2015-07-07
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -33,7 +33,15 @@ var getViewValueFrom = {
     }
   },
   INPUT: function(element) {
-    return element.attr('value');
+    var type = element.attr('type');
+    if(type === 'radio') {
+        if(element.prop('checked')) {
+          return element.attr('value');
+        }
+    }
+    else {
+        return element.attr('value');
+    }
   },
   TEXTAREA: function(element) {
     return element.html();
