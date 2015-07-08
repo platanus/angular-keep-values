@@ -7,7 +7,7 @@ describe('', function() {
   beforeEach(module('platanus.keepValues'));
 
   describe('keepInputValues directive', function() {
-    var element, scope;
+    var element, forms, scope;
 
     beforeEach(inject(function($rootScope, $compile) {
       element = angular.element('\
@@ -28,8 +28,9 @@ describe('', function() {
           <input type="radio" value="Visa" ng-model="data.payment">\
           <input type="radio" value="Deposit" ng-model="data.payment">\
           <input type="radio" value="None">\
-        </div>\
-        <form name="myForm" keep-input-values></form>\
+        </div>');
+
+      forms = angular.element('<form name="myForm" keep-input-values=""><input value="123" type="text" ng-model="test" /></form>\
         <div keep-input-values>\
           <form name="formInsideDiv"></form>\
           <form></form>\
@@ -39,6 +40,7 @@ describe('', function() {
       scope = $rootScope.$new();
       scope.data = { nombre: '' };
       $compile(element)(scope);
+      $compile(forms)(scope);
       scope.$digest();
     }));
 
@@ -76,6 +78,7 @@ describe('', function() {
 
 
     it('should set form state to pristine', function(){
+      console.log(forms);
       expect(scope['myForm'].$pristine).toBe(true);
       expect(scope['formInsideDiv'].$pristine).toBe(true);
     });
