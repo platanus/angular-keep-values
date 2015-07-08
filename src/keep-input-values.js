@@ -21,7 +21,7 @@ function keepInputValues($compile) {
       });
     });
 
-    function preCompile(scope, element, attrs){
+    function postCompile(scope, element, attrs){
       if(element[0].tagName === 'FORM') {
         setPristine(attrs.name);
       } else {
@@ -37,7 +37,7 @@ function keepInputValues($compile) {
     }
 
     return {
-      pre: preCompile
+      post: postCompile
     };
   }
 }
