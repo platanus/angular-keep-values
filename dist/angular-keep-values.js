@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.9 - 2015-07-07
+ * @version v0.1.10 - 2015-07-07
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -101,7 +101,7 @@ function keepInputValues($compile) {
       });
     });
 
-    function preCompile(scope, element, attrs){
+    function postCompile(scope, element, attrs){
       if(element[0].tagName === 'FORM') {
         setPristine(attrs.name);
       } else {
@@ -117,7 +117,7 @@ function keepInputValues($compile) {
     }
 
     return {
-      pre: preCompile
+      post: postCompile
     };
   }
 }
