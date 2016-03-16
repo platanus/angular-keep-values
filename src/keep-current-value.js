@@ -24,6 +24,13 @@ var getViewValueFrom = {
           return element.attr('value');
         }
     }
+    else if(type === 'checkbox') {
+        if(element.prop('checked')) {
+          return true;
+        } else {
+          return false;
+        }
+    }
     else {
         return element.attr('value');
     }
