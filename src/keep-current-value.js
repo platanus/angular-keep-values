@@ -25,7 +25,16 @@ var getViewValueFrom = {
         }
     }
     else if(type === 'checkbox') {
-        return element.prop('checked');
+        if(element.prop('checked')) {
+          return element.attr('ng-true-value') ||
+                  element.attr('data-ng-true-value') ||
+                  element.attr('value') ||
+                  true;
+        } else {
+          return element.attr('ng-false-value') ||
+                  element.attr('data-ng-false-value') ||
+                  false;
+        }
     }
     else {
         return element.attr('value');
@@ -51,7 +60,7 @@ function keepCurrentValue() {
 
   function link(scope, element, attrs, controller) {
     var viewValue = getViewValueFromElement(element);
-    if ( viewValue ) {
+    if ( viewValue !== undefined ) {
       controller.$setViewValue(viewValue);
       controller.$setPristine();
       controller.$render();
