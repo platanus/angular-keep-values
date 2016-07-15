@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.10 - 2015-07-07
+ * @version v0.1.11 - 2016-07-15
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -39,6 +39,18 @@ var getViewValueFrom = {
           return element.attr('value');
         }
     }
+    else if(type === 'checkbox') {
+        if(element.prop('checked')) {
+          return element.attr('ng-true-value') ||
+                  element.attr('data-ng-true-value') ||
+                  element.attr('value') ||
+                  true;
+        } else {
+          return element.attr('ng-false-value') ||
+                  element.attr('data-ng-false-value') ||
+                  false;
+        }
+    }
     else {
         return element.attr('value');
     }
@@ -63,7 +75,7 @@ function keepCurrentValue() {
 
   function link(scope, element, attrs, controller) {
     var viewValue = getViewValueFromElement(element);
-    if ( viewValue ) {
+    if ( viewValue !== undefined ) {
       controller.$setViewValue(viewValue);
       controller.$setPristine();
       controller.$render();
@@ -96,7 +108,7 @@ function keepInputValues($compile) {
       var checkElements = element.find(tagName);
       angular.forEach(checkElements, function(checkElement) {
         checkElement = angular.element(checkElement);
-        if (angular.isDefined(checkElement.attr('ng-model')))
+        if (angular.isDefined(checkElement.attr('ng-model')) || angular.isDefined(checkElement.attr('data-ng-model')))
           checkElement.attr('keep-current-value', '');
       });
     });
