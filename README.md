@@ -30,6 +30,7 @@ Add the ```keep-current-value``` directive to any input, select or textarea elem
 
 ```html
 <input type="text" ng-model="data.name" value="René Morales" keep-current-value>
+
 <select ng-model="data.city" keep-current-value>
   <option value="1">Santiago</option>
   <option value="2" selected>Concepción</option>
@@ -40,6 +41,8 @@ Add the ```keep-current-value``` directive to any input, select or textarea elem
 <input type="radio" ng-model="data.payment" value="None" keep-current-value>
 
 <textarea ng-model="data.text" keep-current-value>Lorem ipsum</textarea>
+
+<input type="checkbox" ng-model="data.remember" keep-current-value checked />
 ```
 
 Will result in:
@@ -47,8 +50,9 @@ Will result in:
 $scope.data = {
   name: 'René Morales',
   city: '2',
+  payment: 'Master Card',
   text: 'Lorem ipsum',
-  payment: 'Master Card'
+  remember: true
 }
 ```
 

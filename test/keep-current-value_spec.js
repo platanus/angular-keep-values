@@ -161,5 +161,66 @@ describe('', function() {
     });
   });
 
+
+  describe('keepCurrentValue directive on checked checkboxes (single)', function() {
+    var html, scope, elements=[];
+
+    beforeEach(inject(function($rootScope, $compile) {
+      elements[0] = angular.element('<input type="checkbox" keep-current-value name="car" ng-model="data.car" checked />');
+      elements[1] = angular.element('<input type="checkbox" keep-current-value name="bike" ng-model="data.bike"\
+                                        value="bike" checked />');
+      scope = $rootScope.$new();
+      scope.data = { car: undefined, bike: undefined };
+      $compile(elements[0])(scope);
+      $compile(elements[1])(scope);
+      scope.$digest();
+    }));
+
+    describe('without value tag and checked', function() {
+      it('should set the ngModel\'s value', function(){
+        expect(scope.data.car).toEqual(true);
+        expect(elements[0].val()).toEqual('on');
+      });
+    });
+
+    describe('with value tag and checked', function() {
+      it('should set the ngModel\'s value', function(){
+        expect(scope.data.bike).toEqual('bike');
+        expect(elements[1].val()).toEqual('bike');
+      });
+    });
+
+  });
+
+  describe('keepCurrentValue directive on unchecked checkboxes (single)', function() {
+    var html, scope, elements=[];
+
+    beforeEach(inject(function($rootScope, $compile) {
+      elements[0] = angular.element('<input type="checkbox" keep-current-value name="car" ng-model="data.car" />');
+      elements[1] = angular.element('<input type="checkbox" keep-current-value name="bike" ng-model="data.bike"\
+                                        ng-true-value="bike" ng-false-value="not-a-bike" />');
+      scope = $rootScope.$new();
+      scope.data = { car: undefined, bike: undefined };
+      $compile(elements[0])(scope);
+      $compile(elements[1])(scope);
+      scope.$digest();
+    }));
+
+    describe('without value tag and unchecked', function() {
+      it('should set the ngModel\'s value', function(){
+        expect(scope.data.car).toEqual(false);
+        expect(elements[0].val()).toEqual('');
+      });
+    });
+
+    describe('with value tag and unchecked', function() {
+      it('should set the ngModel\'s value', function(){
+        expect(scope.data.bike).toEqual('not-a-bike');
+        expect(elements[1].val()).toEqual('');
+      });
+    });
+
+  });
+
 });
 

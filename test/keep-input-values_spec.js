@@ -78,7 +78,6 @@ describe('', function() {
 
 
     it('should set form state to pristine', function(){
-      console.log(forms);
       expect(scope['myForm'].$pristine).toBe(true);
       expect(scope['formInsideDiv'].$pristine).toBe(true);
     });
