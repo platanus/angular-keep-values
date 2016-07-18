@@ -5,7 +5,8 @@ angular
 function keepInputValues($compile) {
   var directive = {
     compile: compile,
-    restrict: 'A'
+    restrict: 'A',
+    require: '^?ngController',
   };
 
   return directive;
@@ -21,7 +22,7 @@ function keepInputValues($compile) {
       });
     });
 
-    function postCompile(scope, element, attrs){
+    function postCompile(scope, element, attrs, ctrl){
       if(element[0].tagName === 'FORM') {
         setPristine(attrs.name);
       } else {
@@ -31,8 +32,13 @@ function keepInputValues($compile) {
       }
 
       function setPristine(formName){
-        if(formName && scope[formName])
-          scope[formName].$setPristine();
+        if(formName) {
+          var form = formName.substring(formName.indexOf('.') + 1);
+          var formController = scope[formName] || getObjectByString(ctrl, form);
+          if (formController.$setPristine) {
+            formController.$setPristine();
+          }
+        }
       }
     }
 
