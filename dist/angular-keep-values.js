@@ -1,6 +1,6 @@
 /**
  * Keep your input values in your ngModels
- * @version v0.1.11 - 2016-07-15
+ * @version v0.1.12 - 2016-07-19
  * @link https://github.com/platanus/angular-keep-values
  * @author Emilio Blanco <emilioeduardob@gmail.com>, Jaime Bunzli <jpbunzli@gmail.com>, René Morales <rene.morales.sanchez@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -8,6 +8,23 @@
 
 (function(angular, undefined) {
 'use strict';
+// via http://stackoverflow.com/a/6491621
+
+function getObjectByString(obj, str) {
+  if (!obj) return;
+  str = str.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+  str = str.replace(/^\./, '');           // strip a leading dot
+  var arr = str.split('.');
+  for (var i = 0, n = arr.length; i < n; ++i) {
+      var key = arr[i];
+      if (key in obj) {
+          obj = obj[key];
+      } else {
+          return;
+      }
+  }
+  return obj;
+}
 var SUPPORTED_ELEMENTS = ['INPUT', 'SELECT', 'TEXTAREA'];
 
 angular
@@ -97,7 +114,8 @@ angular
 function keepInputValues($compile) {
   var directive = {
     compile: compile,
-    restrict: 'A'
+    restrict: 'A',
+    require: '^?ngController',
   };
 
   return directive;
@@ -113,7 +131,7 @@ function keepInputValues($compile) {
       });
     });
 
-    function postCompile(scope, element, attrs){
+    function postCompile(scope, element, attrs, ctrl){
       if(element[0].tagName === 'FORM') {
         setPristine(attrs.name);
       } else {
@@ -123,8 +141,13 @@ function keepInputValues($compile) {
       }
 
       function setPristine(formName){
-        if(formName && scope[formName])
-          scope[formName].$setPristine();
+        if(formName) {
+          var form = formName.substring(formName.indexOf('.') + 1);
+          var formController = scope[formName] || getObjectByString(ctrl, form);
+          if (formController.$setPristine) {
+            formController.$setPristine();
+          }
+        }
       }
     }
 
