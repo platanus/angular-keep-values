@@ -1,7 +1,4 @@
 {
-  "engines": {
-    "node": ">= 0.9"
-  },
   "dependencies": {},
   "devDependencies": {
     "grunt-cli": "~0.1.13",
