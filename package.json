@@ -1,4 +1,5 @@
 {
+  "version": "0.1.12",
   "dependencies": {},
   "devDependencies": {
     "grunt-cli": "~0.1.13",
