@@ -1,8 +1,15 @@
 language: node_js
 node_js:
-  - 4
-
+- 4
 before_script:
-  - npm install -g karma-cli
-  - npm install -g bower
-  - bower install
+- npm install -g karma-cli
+- npm install -g bower
+- bower install
+deploy:
+  provider: npm
+  email: juan.ignacio@platan.us
+  api_key:
+    secure: OdfE23EiTFUrnE0V2m3hJcfmZ/cqqTbHy55RvC8LgZvBbMWnlvdoCS1SngAy6TJuv1jKOH13UUPgWEjMy5nc5EqizdE2sr/j1BV+F7G4aKm4jHbJ9f8xISqaTsHIRSp/JmoIiqaMlvyWjfKjFWF3/Sbd6G4hZKnpRQZRmQ9sslY=
+  on:
+    tags: true
+    repo: platanus/angular-keep-values
