@@ -1,4 +1,5 @@
 {
+  "name": "angular-keep-values",
   "version": "0.1.12",
   "dependencies": {},
   "devDependencies": {
