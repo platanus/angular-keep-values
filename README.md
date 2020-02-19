@@ -8,6 +8,12 @@ angular-keep-values [![Bower version][bower-badge]][bower] [![Build Status][trav
 
 Use the ```value``` attribute in your inputs to set the value of your ```ngModel```.
 
+## angular-keep-values is no longer maintained.
+
+- We will leave the Issues open as a discussion forum only.
+- We do not guarantee a response from us in the Issues.
+- We are no longer accepting pull requests.
+
 ## Installation
 
 *Just use [Bower](http://bower.io/)*.
